@@ -11,7 +11,7 @@ mcpSettings:
     - 'localhost'
 
 mcpServers:
-  management:
+  checkpoint-management:
     # If you change MGMT_MCP_PROXY_PORT in .env, update this port to match
     url: http://checkpoint-management-mcp:8094/sse
 
