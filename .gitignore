@@ -1,0 +1,15 @@
+# Secrets
+.env
+
+# Generated certs
+client/certs/
+
+# LibreChat runtime data
+data-node/
+meili_data_v1.35.1/
+uploads/
+images/
+logs/
+
+# Docker volumes
+pgdata2/
