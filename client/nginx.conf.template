@@ -1,0 +1,26 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    return 301 https://$$host:${LIBRECHAT_HTTPS_PORT}$$request_uri;
+}
+server {
+    listen 443 ssl;
+    ssl_certificate /etc/nginx/certs/server.crt;
+    ssl_certificate_key /etc/nginx/certs/server.key;
+    location /api {
+        proxy_pass http://api:3080/api;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $$host;
+        proxy_cache_bypass $$http_upgrade;
+    }
+    location / {
+        proxy_pass http://api:3080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $$http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $$host;
+        proxy_cache_bypass $$http_upgrade;
+    }
+}

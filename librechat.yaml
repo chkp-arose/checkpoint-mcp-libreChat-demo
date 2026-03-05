@@ -1,0 +1,20 @@
+# For more information, see the Configuration Guide:
+# https://www.librechat.ai/docs/configuration/librechat_yaml
+
+version: 1.3.5
+cache: true
+
+mcpSettings:
+  allowedDomains:
+    - 'checkpoint-management-mcp'  # Docker service name
+    - 'host.docker.internal'
+    - 'localhost'
+
+mcpServers:
+  management:
+    # If you change MGMT_MCP_PROXY_PORT in .env, update this port to match
+    url: http://checkpoint-management-mcp:8094/sse
+
+endpoints:
+  openAI:
+    userProvide: true

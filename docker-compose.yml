@@ -1,0 +1,145 @@
+services:
+
+  # ── Certificate Generator (init container) ──────────────────────────────────
+  cert-generator:
+    image: alpine/openssl
+    container_name: cert-generator
+    volumes:
+      - ./client/certs:/certs
+    environment:
+      - SERVER_IP=${SERVER_IP}
+    command: >
+      sh -c "if [ ! -f /certs/server.crt ]; then
+      openssl req -x509 -nodes -days 365 -newkey rsa:2048
+      -keyout /certs/server.key
+      -out /certs/server.crt
+      -subj '/CN=librechat-local'
+      -addext 'subjectAltName=IP:${SERVER_IP}'; fi"
+    restart: no
+
+  # ── LibreChat API ────────────────────────────────────────────────────────────
+  api:
+    image: registry.librechat.ai/danny-avila/librechat-dev-api:latest
+    container_name: LibreChat-API
+    ports:
+      - "${LIBRECHAT_API_PORT:-3080}:3080"
+    depends_on:
+      - mongodb
+      - rag_api
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    environment:
+      - HOST=0.0.0.0
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/LibreChat
+      - MEILI_HOST=http://meilisearch:7700
+      - RAG_PORT=${RAG_PORT:-8000}
+      - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
+    volumes:
+      - type: bind
+        source: ./librechat.yaml
+        target: /app/librechat.yaml
+      - ./images:/app/client/public/images
+      - ./uploads:/app/uploads
+      - ./logs:/app/api/logs
+
+  # ── NGINX ────────────────────────────────────────────────────────────────────
+  client:
+    image: nginx:1.27.0-alpine
+    container_name: LibreChat-NGINX
+    ports:
+      - "${LIBRECHAT_HTTP_PORT:-8084}:80"
+      - "${LIBRECHAT_HTTPS_PORT:-4434}:443"
+    depends_on:
+      api:
+        condition: service_started
+      cert-generator:
+        condition: service_completed_successfully
+    restart: always
+    environment:
+      - LIBRECHAT_HTTPS_PORT=${LIBRECHAT_HTTPS_PORT:-4434}
+    volumes:
+      - ./client/nginx.conf.template:/etc/nginx/templates/default.conf.template
+      - ./client/certs:/etc/nginx/certs
+
+  # ── MongoDB ──────────────────────────────────────────────────────────────────
+  mongodb:
+    container_name: chat-mongodb
+    image: mongo:8.0.17
+    restart: always
+    volumes:
+      - ./data-node:/data/db
+    command: mongod --noauth
+
+  # ── Meilisearch ──────────────────────────────────────────────────────────────
+  meilisearch:
+    container_name: chat-meilisearch
+    image: getmeili/meilisearch:v1.35.1
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - MEILI_HOST=http://meilisearch:7700
+      - MEILI_NO_ANALYTICS=true
+    volumes:
+      - ./meili_data_v1.35.1:/meili_data
+
+  # ── VectorDB ─────────────────────────────────────────────────────────────────
+  vectordb:
+    image: pgvector/pgvector:0.8.0-pg15-trixie
+    container_name: vectordb
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    restart: always
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+
+  # ── RAG API ──────────────────────────────────────────────────────────────────
+  rag_api:
+    image: registry.librechat.ai/danny-avila/librechat-rag-api-dev-lite:latest
+    container_name: rag_api
+    environment:
+      - DB_HOST=vectordb
+      - RAG_PORT=${RAG_PORT:-8000}
+    restart: always
+    depends_on:
+      - vectordb
+    env_file:
+      - .env
+
+  # ── Sandpack Bundler ─────────────────────────────────────────────────────────
+  sandpack-bundler:
+    image: ghcr.io/librechat-ai/codesandbox-client/bundler:latest
+    container_name: sandpack-bundler
+    ports:
+      - "${SANDPACK_PORT:-8080}:80"
+    restart: unless-stopped
+
+  # ── Check Point Management MCP ───────────────────────────────────────────────
+  checkpoint-management-mcp:
+    build:
+      context: .
+      dockerfile: checkpoint-management-mcp.Dockerfile
+    container_name: checkpoint-management-mcp
+    environment:
+      - API_KEY=${MGMT_MCP_API_KEY}
+      - MANAGEMENT_HOST=${MGMT_MCP_HOST}
+      - MANAGEMENT_PORT=${MGMT_MCP_PORT}
+    command: "--pass-environment --host 0.0.0.0 --port ${MGMT_MCP_PROXY_PORT:-8094} npx @chkp/quantum-management-mcp"
+    ports:
+      - "${MGMT_MCP_PROXY_PORT:-8094}:${MGMT_MCP_PROXY_PORT:-8094}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${MGMT_MCP_PROXY_PORT:-8094}/sse"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  pgdata2:
