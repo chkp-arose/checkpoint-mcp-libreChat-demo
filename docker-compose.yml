@@ -8,13 +8,14 @@ services:
       - ./client/certs:/certs
     environment:
       - SERVER_IP=${SERVER_IP}
+    entrypoint: sh
     command: >
-      sh -c "if [ ! -f /certs/server.crt ]; then
+      -c "apk add --no-cache openssl &&
+      if [ ! -f /certs/server.crt ]; then
       openssl req -x509 -nodes -days 365 -newkey rsa:2048
       -keyout /certs/server.key
       -out /certs/server.crt
-      -subj '/CN=librechat-local'
-      -addext 'subjectAltName=IP:${SERVER_IP}'; fi"
+      -subj '/CN=${SERVER_IP}'; fi"
     restart: no
 
   # ── LibreChat API ────────────────────────────────────────────────────────────
