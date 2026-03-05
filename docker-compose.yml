@@ -123,23 +123,5 @@ services:
     healthcheck:
       disable: true
 
-  # ── Check Point Management MCP ───────────────────────────────────────────────
-  checkpoint-management-mcp:
-    build:
-      context: .
-      dockerfile: checkpoint-management-mcp.Dockerfile
-    container_name: checkpoint-management-mcp
-    environment:
-      - API_KEY=${MGMT_MCP_API_KEY}
-      - MANAGEMENT_HOST=${MGMT_MCP_HOST}
-      - MANAGEMENT_PORT=${MGMT_MCP_PORT}
-    command: "--pass-environment --host 0.0.0.0 --port ${MGMT_MCP_PROXY_PORT:-8094} npx @chkp/quantum-management-mcp"
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "curl -s --max-time 3 http://localhost:${MGMT_MCP_PROXY_PORT:-8094}/sse || true"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
 volumes:
   pgdata2:
