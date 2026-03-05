@@ -2,6 +2,7 @@
 
 A fully self-contained, Docker-based deployment of [LibreChat](https://librechat.ai) pre-configured with all available [Check Point MCP servers](https://github.com/CheckPointSW/mcp-servers). This demo enables security teams to interact with their Check Point infrastructure using natural language — querying policies, analyzing logs, assessing threats, and generating executive-ready reports — all from a single, browser-based AI chat interface.
 
+![App Main](docs/images/AppMain.png)
 ---
 
 ## What This Includes
@@ -128,7 +129,10 @@ Before you can chat, you need to connect at least one AI model provider:
 
 1. Click the **model selector** in the top-left corner of the chat interface
 2. Next to each provider (OpenAI, Anthropic, etc.) you will see a **gear icon** — click it to enter your API key
+![Set API Key](docs/images/setApiKey.png)
 3. Your key is stored securely and associated with your account only
+
+
 
 > LibreChat supports OpenAI, Azure OpenAI, Anthropic, Google, and many more. Refer to [https://www.librechat.ai/docs/configuration](https://www.librechat.ai/docs/configuration) for the full list of supported providers.
 
@@ -140,7 +144,13 @@ All Check Point MCP servers are pre-configured in this deployment. Each user mus
 2. Click **MCP Settings**
 3. Browse the list of available Check Point MCP servers
 4. Click the **connect icon** next to the server you wish to use
+
+![Connect MCP](docs/images/connectMcp.png)
+
 5. A credential dialog will appear — fill in the required fields
+
+![Configure MCP Variables](docs/images/configureMcpVariables.png)
+
 
 > **Important:** Many MCP servers support multiple authentication modes. For example, the Quantum Management server supports:
 > - **Option A — Smart-1 Cloud:** Provide your Smart-1 Cloud tenant URL and API key
