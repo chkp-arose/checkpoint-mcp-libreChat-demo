@@ -5,465 +5,504 @@ version: 1.3.5
 cache: true
 
 mcpSettings:
-  allowedDomains:
-    - 'localhost'
-    - 'host.docker.internal'
+allowedDomains:
+  - 'localhost'
+  - 'host.docker.internal'
 
 mcpServers:
-  # ── Argos External Risk Management ──────────────────────────────────────────
-  argos-erm:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/argos-erm-mcp"
-    env:
-      ARGOS_HOST: "{{ARGOS_HOST}}"
-      ARGOS_API_KEY: "{{ARGOS_API_KEY}}"
-      ARGOS_CUSTOMER_ID: "{{ARGOS_CUSTOMER_ID}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      ARGOS_HOST:
-        title: "Argos ERM Host"
-        description: "Argos ERM server URL (fallback: ARGOS_SERVER_URL), e.g. https://argos.example.com"
-      ARGOS_API_KEY:
-        title: "Argos ERM API Key"
-        description: "Argos ERM API authentication token (fallback: ARGOS_INTEGRATION_TOKEN)"
-      ARGOS_CUSTOMER_ID:
-        title: "Argos Customer ID"
-        description: "Your Argos customer ID, used as context in all API requests"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Argos External Risk Management ──────────────────────────────────────────
+argos-erm:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/argos-erm-mcp"
+  env:
+    ARGOS_HOST: "{{ARGOS_HOST}}"
+    ARGOS_API_KEY: "{{ARGOS_API_KEY}}"
+    ARGOS_CUSTOMER_ID: "{{ARGOS_CUSTOMER_ID}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    ARGOS_HOST:
+      title: "Argos ERM Host"
+      description: "Argos ERM server URL (fallback: ARGOS_SERVER_URL), e.g. https://argos.example.com"
+    ARGOS_API_KEY:
+      title: "Argos ERM API Key"
+      description: "Argos ERM API authentication token (fallback: ARGOS_INTEGRATION_TOKEN)"
+    ARGOS_CUSTOMER_ID:
+      title: "Argos Customer ID"
+      description: "Your Argos customer ID, used as context in all API requests"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── CPInfo Analysis ─────────────────────────────────────────────────────────
-  cpinfo-analysis:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/cpinfo-analysis-mcp"
-    env:
-      CPINFO_CACHE_TTL_MS: "{{CPINFO_CACHE_TTL_MS}}"
-      CPINFO_ENABLE_DEBUG_TOOLS: "{{CPINFO_ENABLE_DEBUG_TOOLS}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      CPINFO_CACHE_TTL_MS:
-        title: "Cache TTL (ms)"
-        description: "Cache eviction timeout in milliseconds, default: 10800000 / 3 hours (optional)"
-      CPINFO_ENABLE_DEBUG_TOOLS:
-        title: "Enable Debug Tools"
-        description: "Enable debug tools for section management (list, suggest, reclassify), default: false (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── CPInfo Analysis ─────────────────────────────────────────────────────────
+cpinfo-analysis:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/cpinfo-analysis-mcp"
+  env:
+    CPINFO_CACHE_TTL_MS: "{{CPINFO_CACHE_TTL_MS}}"
+    CPINFO_ENABLE_DEBUG_TOOLS: "{{CPINFO_ENABLE_DEBUG_TOOLS}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    CPINFO_CACHE_TTL_MS:
+      title: "Cache TTL (ms)"
+      description: "Cache eviction timeout in milliseconds, default: 10800000 / 3 hours (optional)"
+    CPINFO_ENABLE_DEBUG_TOOLS:
+      title: "Enable Debug Tools"
+      description: "Enable debug tools for section management (list, suggest, reclassify), default: false (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Documentation Tool ──────────────────────────────────────────────────────
-  documentation:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/documentation-mcp"
-    env:
-      CLIENT_ID: "{{CLIENT_ID}}"
-      SECRET_KEY: "{{SECRET_KEY}}"
-      REGION: "{{REGION}}"
-      DEV_PORT: "{{DEV_PORT}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      CLIENT_ID:
-        title: "Client ID"
-        description: "Client ID from Infinity Portal API Keys (required)"
-      SECRET_KEY:
-        title: "Secret Key"
-        description: "Secret Key from Infinity Portal API Keys (required)"
-      REGION:
-        title: "Region"
-        description: "Documentation Tool region: EU, US, STG, or Local. Default: EU (optional)"
-      DEV_PORT:
-        title: "Dev Port"
-        description: "Port for local deployment (only used when REGION=Local), default: 8006 (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Documentation Tool ──────────────────────────────────────────────────────
+documentation:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/documentation-mcp"
+  env:
+    CLIENT_ID: "{{CLIENT_ID}}"
+    SECRET_KEY: "{{SECRET_KEY}}"
+    REGION: "{{REGION}}"
+    DEV_PORT: "{{DEV_PORT}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    CLIENT_ID:
+      title: "Client ID"
+      description: "Client ID from Infinity Portal API Keys (required)"
+    SECRET_KEY:
+      title: "Secret Key"
+      description: "Secret Key from Infinity Portal API Keys (required)"
+    REGION:
+      title: "Region"
+      description: "Documentation Tool region: EU, US, STG, or Local. Default: EU (optional)"
+    DEV_PORT:
+      title: "Dev Port"
+      description: "Port for local deployment (only used when REGION=Local), default: 8006 (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Quantum Gaia ────────────────────────────────────────────────────────────
-  quantum-gaia:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/quantum-gaia-mcp"
-    env:
-      VERBOSE: "{{VERBOSE}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      VERBOSE:
-        title: "Verbose Output"
-        description: "Set to 'true' to enable verbose output (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Quantum Gaia ────────────────────────────────────────────────────────────
+quantum-gaia:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/quantum-gaia-mcp"
+  env:
+    VERBOSE: "{{VERBOSE}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    VERBOSE:
+      title: "Verbose Output"
+      description: "Set to 'true' to enable verbose output (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Quantum Gateway CLI ─────────────────────────────────────────────────────
-  quantum-gw-cli:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/quantum-gw-cli-mcp"
-    env:
-      S1C_URL: "{{S1C_URL}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      API_KEY: "{{API_KEY}}"
-      USERNAME: "{{USERNAME}}"
-      PASSWORD: "{{PASSWORD}}"
-      REGION: "{{REGION}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      S1C_URL:
-        title: "Smart-1 Cloud URL (Option A)"
-        description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
-      API_KEY:
-        title: "API Key (Option A or B)"
-        description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
-      MANAGEMENT_HOST:
-        title: "Management Host (Option B/C - On-Premises)"
-        description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Management server port, default: 443 (optional, for Option B/C)"
-      USERNAME:
-        title: "Username (Option C - On-Premises)"
-        description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
-      PASSWORD:
-        title: "Password (Option C - On-Premises)"
-        description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
-      REGION:
-        title: "Region"
-        description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Quantum Gateway CLI ─────────────────────────────────────────────────────
+quantum-gw-cli:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/quantum-gw-cli-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    REGION: "{{REGION}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    REGION:
+      title: "Region"
+      description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Quantum Gateway Connection Analysis ─────────────────────────────────────
-  quantum-gw-connection-analysis:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/quantum-gw-connection-analysis-mcp"
-    env:
-      S1C_URL: "{{S1C_URL}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      API_KEY: "{{API_KEY}}"
-      USERNAME: "{{USERNAME}}"
-      PASSWORD: "{{PASSWORD}}"
-      REGION: "{{REGION}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      S1C_URL:
-        title: "Smart-1 Cloud URL (Option A)"
-        description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
-      API_KEY:
-        title: "API Key (Option A or B)"
-        description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
-      MANAGEMENT_HOST:
-        title: "Management Host (Option B/C - On-Premises)"
-        description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Management server port, default: 443 (optional, for Option B/C)"
-      USERNAME:
-        title: "Username (Option C - On-Premises)"
-        description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
-      PASSWORD:
-        title: "Password (Option C - On-Premises)"
-        description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
-      REGION:
-        title: "Region"
-        description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Quantum Gateway Connection Analysis ─────────────────────────────────────
+quantum-gw-connection-analysis:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/quantum-gw-connection-analysis-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    REGION: "{{REGION}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    REGION:
+      title: "Region"
+      description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Harmony SASE ────────────────────────────────────────────────────────────
-  harmony-sase:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/harmony-sase-mcp"
-    env:
-      API_KEY: "{{API_KEY}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      ORIGIN: "{{ORIGIN}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      API_KEY:
-        title: "Harmony SASE API Key"
-        description: "API key obtained from SASE portal > Settings > API support (required)"
-      MANAGEMENT_HOST:
-        title: "Management Host"
-        description: "Harmony SASE management API URL, e.g. https://api.your-management-host.com/api (required)"
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Port for management connection, default: 443 (optional)"
-      ORIGIN:
-        title: "Tenant Origin"
-        description: "Tenant origin domain, e.g. https://your.origin-domain.com (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Harmony SASE ────────────────────────────────────────────────────────────
+harmony-sase:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/harmony-sase-mcp"
+  env:
+    API_KEY: "{{API_KEY}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    ORIGIN: "{{ORIGIN}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    API_KEY:
+      title: "Harmony SASE API Key"
+      description: "API key obtained from SASE portal > Settings > API support (required)"
+    MANAGEMENT_HOST:
+      title: "Management Host"
+      description: "Harmony SASE management API URL, e.g. https://api.your-management-host.com/api (required)"
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Port for management connection, default: 443 (optional)"
+    ORIGIN:
+      title: "Tenant Origin"
+      description: "Tenant origin domain, e.g. https://your.origin-domain.com (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── HTTPS Inspection ────────────────────────────────────────────────────────
-  https-inspection:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/https-inspection-mcp"
-    env:
-      S1C_URL: "{{S1C_URL}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      API_KEY: "{{API_KEY}}"
-      USERNAME: "{{USERNAME}}"
-      PASSWORD: "{{PASSWORD}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      S1C_URL:
-        title: "Smart-1 Cloud URL (Option A)"
-        description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
-      API_KEY:
-        title: "API Key (Option A or B)"
-        description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
-      MANAGEMENT_HOST:
-        title: "Management Host (Option B/C - On-Premises)"
-        description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Management server port, default: 443 (optional, for Option B/C)"
-      USERNAME:
-        title: "Username (Option C - On-Premises)"
-        description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
-      PASSWORD:
-        title: "Password (Option C - On-Premises)"
-        description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── HTTPS Inspection ────────────────────────────────────────────────────────
+https-inspection:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/https-inspection-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Quantum Management ──────────────────────────────────────────────────────
-  quantum-management:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/quantum-management-mcp"
-    env:
-      S1C_URL: "{{S1C_URL}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      API_KEY: "{{API_KEY}}"
-      USERNAME: "{{USERNAME}}"
-      PASSWORD: "{{PASSWORD}}"
-      REGION: "{{REGION}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      S1C_URL:
-        title: "Smart-1 Cloud URL (Option A)"
-        description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
-      API_KEY:
-        title: "API Key (Option A or B)"
-        description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
-      MANAGEMENT_HOST:
-        title: "Management Host (Option B/C - On-Premises)"
-        description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Management server port, default: 443 (optional, for Option B/C)"
-      USERNAME:
-        title: "Username (Option C - On-Premises)"
-        description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
-      PASSWORD:
-        title: "Password (Option C - On-Premises)"
-        description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
-      REGION:
-        title: "Region"
-        description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Quantum Management ──────────────────────────────────────────────────────
+quantum-management:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/quantum-management-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    REGION: "{{REGION}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    REGION:
+      title: "Region"
+      description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Management Logs ─────────────────────────────────────────────────────────
-  management-logs:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/management-logs-mcp"
-    env:
-      S1C_URL: "{{S1C_URL}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      API_KEY: "{{API_KEY}}"
-      USERNAME: "{{USERNAME}}"
-      PASSWORD: "{{PASSWORD}}"
-      REGION: "{{REGION}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      S1C_URL:
-        title: "Smart-1 Cloud URL (Option A)"
-        description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
-      API_KEY:
-        title: "API Key (Option A or B)"
-        description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
-      MANAGEMENT_HOST:
-        title: "Management Host (Option B/C - On-Premises)"
-        description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Management server port, default: 443 (optional, for Option B/C)"
-      USERNAME:
-        title: "Username (Option C - On-Premises)"
-        description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
-      PASSWORD:
-        title: "Password (Option C - On-Premises)"
-        description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
-      REGION:
-        title: "Region"
-        description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Management Logs ─────────────────────────────────────────────────────────
+management-logs:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/management-logs-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    REGION: "{{REGION}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    REGION:
+      title: "Region"
+      description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Reputation Service ──────────────────────────────────────────────────────
-  reputation-service:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/reputation-service-mcp"
-    env:
-      API_KEY: "{{API_KEY}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      API_KEY:
-        title: "Reputation Service API Key"
-        description: "Check Point Reputation Service API key, request from TCAPI_SUPPORT@checkpoint.com (required)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Reputation Service ──────────────────────────────────────────────────────
+reputation-service:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/reputation-service-mcp"
+  env:
+    API_KEY: "{{API_KEY}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    API_KEY:
+      title: "Reputation Service API Key"
+      description: "Check Point Reputation Service API key, request from TCAPI_SUPPORT@checkpoint.com (required)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Spark Management ────────────────────────────────────────────────────────
-  spark-management:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/spark-management-mcp"
-    env:
-      CLIENT_ID: "{{CLIENT_ID}}"
-      SECRET_KEY: "{{SECRET_KEY}}"
-      INFINITY_PORTAL_URL: "{{INFINITY_PORTAL_URL}}"
-      REGION: "{{REGION}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      CLIENT_ID:
-        title: "Client ID"
-        description: "API client ID from Infinity Portal API Keys (required)"
-      SECRET_KEY:
-        title: "Secret Key"
-        description: "API secret key from Infinity Portal API Keys (required)"
-      INFINITY_PORTAL_URL:
-        title: "Infinity Portal URL"
-        description: "Infinity Portal URL endpoint, e.g. https://portal.checkpoint.com (required)"
-      REGION:
-        title: "Region"
-        description: "Cloud region code: EU, US, STG, or LOCAL. Default: EU (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Spark Management ────────────────────────────────────────────────────────
+spark-management:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/spark-management-mcp"
+  env:
+    CLIENT_ID: "{{CLIENT_ID}}"
+    SECRET_KEY: "{{SECRET_KEY}}"
+    INFINITY_PORTAL_URL: "{{INFINITY_PORTAL_URL}}"
+    REGION: "{{REGION}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    CLIENT_ID:
+      title: "Client ID"
+      description: "API client ID from Infinity Portal API Keys (required)"
+    SECRET_KEY:
+      title: "Secret Key"
+      description: "API secret key from Infinity Portal API Keys (required)"
+    INFINITY_PORTAL_URL:
+      title: "Infinity Portal URL"
+      description: "Infinity Portal URL endpoint, e.g. https://portal.checkpoint.com (required)"
+    REGION:
+      title: "Region"
+      description: "Cloud region code: EU, US, STG, or LOCAL. Default: EU (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Threat Emulation ────────────────────────────────────────────────────────
-  threat-emulation:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/threat-emulation-mcp"
-    env:
-      API_KEY: "{{API_KEY}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      API_KEY:
-        title: "Threat Emulation API Key"
-        description: "Check Point Threat Emulation API key (sent as Authorization header to te-api.checkpoint.com) (required)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Threat Emulation ────────────────────────────────────────────────────────
+threat-emulation:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/threat-emulation-mcp"
+  env:
+    API_KEY: "{{API_KEY}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    API_KEY:
+      title: "Threat Emulation API Key"
+      description: "Check Point Threat Emulation API key (sent as Authorization header to te-api.checkpoint.com) (required)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
-  # ── Threat Prevention ───────────────────────────────────────────────────────
-  threat-prevention:
-    type: stdio
-    startup: false
-    command: npx
-    args:
-      - -y
-      - "@chkp/threat-prevention-mcp"
-    env:
-      S1C_URL: "{{S1C_URL}}"
-      MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
-      MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
-      API_KEY: "{{API_KEY}}"
-      USERNAME: "{{USERNAME}}"
-      PASSWORD: "{{PASSWORD}}"
-      REGION: "{{REGION}}"
-      TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
-    customUserVars:
-      S1C_URL:
-        title: "Smart-1 Cloud URL (Option A)"
-        description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
-      API_KEY:
-        title: "API Key (Option A or B)"
-        description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
-      MANAGEMENT_HOST:
-        title: "Management Host (Option B/C - On-Premises)"
-        description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
-      MANAGEMENT_PORT:
-        title: "Management Port"
-        description: "Management server port, default: 443 (optional, for Option B/C)"
-      USERNAME:
-        title: "Username (Option C - On-Premises)"
-        description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
-      PASSWORD:
-        title: "Password (Option C - On-Premises)"
-        description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
-      REGION:
-        title: "Region"
-        description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
-      TELEMETRY_DISABLED:
-        title: "Disable Telemetry"
-        description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+# ── Threat Prevention ───────────────────────────────────────────────────────
+threat-prevention:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/threat-prevention-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    REGION: "{{REGION}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    REGION:
+      title: "Region"
+      description: "Cloud region for infrastructure gateway: EU, US, STG, or LOCAL. Default: EU (optional)"
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
+
+# ── Policy Insights ─────────────────────────────────────────────────────────
+policy-insights:
+  type: stdio
+  startup: false
+  command: npx
+  args:
+    - -y
+    - "@chkp/policy-insights-mcp"
+  env:
+    S1C_URL: "{{S1C_URL}}"
+    MANAGEMENT_HOST: "{{MANAGEMENT_HOST}}"
+    MANAGEMENT_PORT: "{{MANAGEMENT_PORT}}"
+    API_KEY: "{{API_KEY}}"
+    USERNAME: "{{USERNAME}}"
+    PASSWORD: "{{PASSWORD}}"
+    TELEMETRY_DISABLED: "{{TELEMETRY_DISABLED}}"
+  customUserVars:
+    S1C_URL:
+      title: "Smart-1 Cloud URL (Option A)"
+      description: "Smart-1 Cloud tenant Web-API URL, e.g. https://xxxxxxxx.maas.checkpoint.com/yyyyyyy/web_api. Use this OR local Management credentials below, not both."
+    API_KEY:
+      title: "API Key (Option A or B)"
+      description: "API key for Smart-1 Cloud (Option A) or on-prem Management Server (Option B). Required for Options A and B."
+    MANAGEMENT_HOST:
+      title: "Management Host (Option B/C - On-Premises)"
+      description: "IP or hostname of your management server, e.g. 192.168.1.100. Use this OR Smart-1 Cloud URL above, not both."
+    MANAGEMENT_PORT:
+      title: "Management Port"
+      description: "Management server port, default: 443 (optional, for Option B/C)"
+    USERNAME:
+      title: "Username (Option C - On-Premises)"
+      description: "Username for on-prem authentication. Use with Password instead of API Key for Option C."
+    PASSWORD:
+      title: "Password (Option C - On-Premises)"
+      description: "Password for on-prem authentication. Use with Username instead of API Key for Option C."
+    TELEMETRY_DISABLED:
+      title: "Disable Telemetry"
+      description: "Set to 'true' to opt out of anonymous usage statistics (optional)"
 
 endpoints:
-  openAI:
-    userProvide: true
+openAI:
+  userProvide: true
